@@ -1,0 +1,10 @@
+.vs
+*.exe
+*.dll
+packages/
+
+.vs/
+CSBase/bin/
+CSBase/obj/
+CSBase/appsettings.json
+CSBase/appsettings.Development.json
