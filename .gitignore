@@ -4,7 +4,7 @@
 packages/
 
 .vs/
-CSBase/bin/
-CSBase/obj/
-CSBase/appsettings.json
-CSBase/appsettings.Development.json
+bin/
+obj/
+appsettings.json
+appsettings.Development.json
