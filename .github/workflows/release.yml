@@ -24,10 +24,10 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build --configuration Release --version-suffix ${{ github.run_number }}
+        run: dotnet build --configuration Release -p:Version=1.0.${{ github.run_number }}
 
       - name: Publish
-        run: dotnet pack --configuration Release --no-build --version-suffix ${{ github.run_number }}
+        run: dotnet pack --configuration Release --no-build -p:Version=1.0.${{ github.run_number }}
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
