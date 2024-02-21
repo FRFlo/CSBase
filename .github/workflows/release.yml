@@ -40,15 +40,3 @@ jobs:
         run: dotnet nuget push **/*.nupkg --source https://nuget.pkg.github.com/${{ github.REPOSITORY_OWNER }}/index.json --api-key ${{ secrets.GITHUB_TOKEN }}
         env:
           NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: '**/*.nupkg'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            Release created by GitHub Actions
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: false
-          prerelease: false
