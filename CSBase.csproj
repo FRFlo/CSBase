@@ -1,10 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
+		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+		<PackageId>FRFlo.CSBase</PackageId>
+		<Authors>FRFlo</Authors>
+		<Description>Utilitaires pour projet C#</Description>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>FRFlo.CSBase</Title>
+		<Copyright>FRFlo</Copyright>
+		<PackageProjectUrl>https://github.com/FRFlo/CSBase</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/FRFlo/CSBase</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<NeutralLanguage>fr-FR</NeutralLanguage>
+		<PackageTags>frflo</PackageTags>
 	</PropertyGroup>
 
 </Project>
