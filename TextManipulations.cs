@@ -46,8 +46,11 @@ namespace CSBase
             }
 
             builder.Append(lastSeparator);
+#if NET5_0_OR_GREATER
             builder.Append(strings[^1]);
-
+#else
+            builder.Append(strings[strings.Length - 1]);
+#endif
             return builder.ToString();
         }
         /// <summary>

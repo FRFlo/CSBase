@@ -37,10 +37,17 @@ namespace CSBase
         private static void Print(string prefix, ConsoleColor prefixColor, string message, ConsoleColor color = ConsoleColor.White, LoggerIcon? icon = null)
         {
             StringBuilder sb = new();
+#if NET5_0_OR_GREATER
             if (message.EndsWith('\n'))
             {
                 message = message[..^1];
             }
+#else
+            if (message.EndsWith("\n"))
+            {
+                message = message.Substring(0, message.Length - 1);
+            }
+#endif
 
             if (prefix != "DEBUG" || IsDebug)
             {
