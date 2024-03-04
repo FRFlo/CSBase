@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<IncludeSourceRevisionInInformationalVersion>true</IncludeSourceRevisionInInformationalVersion>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageId>FRFlo.CSBase</PackageId>
 		<Authors>FRFlo</Authors>
 		<Description>Utilitaires pour projet C#</Description>
