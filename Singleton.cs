@@ -19,7 +19,7 @@
         /// <summary>
         /// Instance de la classe <typeparamref name="T"/>.
         /// </summary>
-        internal static T Instance
+        public static T Instance
         {
             get
             {

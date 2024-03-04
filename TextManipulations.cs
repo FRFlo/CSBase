@@ -137,7 +137,7 @@ namespace CSBase
         /// <param name="input">Chaîne de caractères à censurer</param>
         /// <param name="censor">Chaîne de caractères à censurer</param>
         /// <param name="replacement">Caractère de remplacement</param>
-        internal static string Censor(string input, string censor, char replacement = '*')
+        public static string Censor(string input, string censor, char replacement = '*')
         {
             return input.Replace(censor, new string(replacement, censor.Length));
         }
@@ -147,7 +147,7 @@ namespace CSBase
         /// <param name="input">Chaîne de caractères à censurer</param>
         /// <param name="censors">Chaînes de caractères à censurer</param>
         /// <param name="replacement">Caractère de remplacement</param>
-        internal static string Censor(string input, IEnumerable<string> censors, char replacement = '*')
+        public static string Censor(string input, IEnumerable<string> censors, char replacement = '*')
         {
             return censors.Aggregate(input, (current, censor) => Censor(current, censor, replacement));
         }
