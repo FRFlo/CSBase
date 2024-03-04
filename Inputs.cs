@@ -2,6 +2,9 @@
 
 namespace CSBase
 {
+    /// <summary>
+    /// Outils pour demander des entrées à l'utilisateur.
+    /// </summary>
     public static class Inputs
     {
         /// <summary>

@@ -8,6 +8,9 @@ namespace CSBase
     /// </summary>
     public static class Logger
     {
+        /// <summary>
+        /// Indique si le programme est en mode debug.
+        /// </summary>
         public static bool IsDebug { get; set; } = false;
         /// <summary>
         /// Chemin du fichier de log. Par défaut, il est situé dans le dossier du programme.
@@ -34,6 +37,7 @@ namespace CSBase
         /// <param name="prefixColor">Couleur du texte du préfixe</param>
         /// <param name="message">Message à afficher dans la console</param>
         /// <param name="color">Couleur du texte du message</param>
+        /// <param name="icon">Icone pour différencier le message</param>
         private static void Print(string prefix, ConsoleColor prefixColor, string message, ConsoleColor color = ConsoleColor.White, LoggerIcon? icon = null)
         {
             StringBuilder sb = new();

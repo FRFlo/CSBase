@@ -2,6 +2,9 @@
 
 namespace CSBase
 {
+    /// <summary>
+    /// Classe permettant d'afficher des données de manière plus lisible.
+    /// </summary>
     public static class Display
     {
         /// <summary>
@@ -48,7 +51,7 @@ namespace CSBase
         /// <summary>
         /// Permet d'afficher un Dictionnaire en alignant les clés et les valeurs avec des espaces.
         /// </summary>
-        /// <param name="dictionary">Dictionnaire à afficher</param>
+        /// <param name="list">Dictionnaire à afficher</param>
         /// <return>La représentation de l'affichage du dictionnaire</return>
         public static string Dictionary(this IEnumerable<IEnumerable<string>> list)
         {
