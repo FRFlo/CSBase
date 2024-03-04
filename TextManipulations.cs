@@ -158,7 +158,7 @@ namespace CSBase
         /// <param name="inputs">Chaînes de caractères à censurer</param>
         /// <param name="censors">Chaînes de caractères à censurer</param>
         /// <param name="replacement">Caractère de remplacement</param>
-        internal static IEnumerable<string> Censor(this IEnumerable<string> inputs, IEnumerable<string> censors, char replacement = '*')
+        public static IEnumerable<string> Censor(this IEnumerable<string> inputs, IEnumerable<string> censors, char replacement = '*')
         {
             return inputs.Select(input => Censor(input, censors, replacement));
         }
