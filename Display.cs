@@ -9,7 +9,7 @@ namespace CSBase
         /// </summary>
         /// <param name="dictionary">Dictionnaire à afficher</param>
         /// <return>La représentation de l'affichage du dictionnaire</return>
-        public static string Dictionary(Dictionary<string, string> dictionary)
+        public static string Dictionary(this Dictionary<string, string> dictionary)
         {
             if (dictionary == null || dictionary.Count == 0) return string.Empty;
 
@@ -28,7 +28,7 @@ namespace CSBase
         /// </summary>
         /// <param name="dictionary">Dictionnaire à afficher</param>
         /// <return>La représentation de l'affichage du dictionnaire</return>
-        public static string Dictionary(Dictionary<string, IEnumerable<string>> dictionary)
+        public static string Dictionary(this Dictionary<string, IEnumerable<string>> dictionary)
         {
             int maxKeyLength = dictionary.Keys.Max(key => key.Length);
             int maxListValueLength = dictionary.Values.SelectMany(list => list).Max(value => value.ToString().Length);
@@ -50,7 +50,7 @@ namespace CSBase
         /// </summary>
         /// <param name="dictionary">Dictionnaire à afficher</param>
         /// <return>La représentation de l'affichage du dictionnaire</return>
-        public static string Dictionary(IEnumerable<IEnumerable<string>> list)
+        public static string Dictionary(this IEnumerable<IEnumerable<string>> list)
         {
             if (list == null || !list.Any()) return string.Empty;
 
