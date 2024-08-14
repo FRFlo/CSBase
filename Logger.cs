@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Diagnostics.Tracing;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace CSBase
@@ -19,8 +22,7 @@ namespace CSBase
         /// <item><description>En mode release, il est situé dans le dossier du programme avec le nom "production.log".</description></item>
         /// </list>
         /// </summary>
-        public static string LogFilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                                                                  Assembly.GetExecutingAssembly().GetName().Name ?? throw new Exception("Le nom du programme n'a pas pu être récupéré !"),
+        public static string LogFilePath { get; set; } = Path.Combine(Directory.GetCurrentDirectory(),
 #if DEBUG
                                                                   "debug.log");
 #else
@@ -29,7 +31,12 @@ namespace CSBase
         /// <summary>
         /// Indique si les logs doivent être écrits dans le fichier de log.
         /// </summary>
-        public static bool LogToFile { get; set; } = true;
+        public static bool LogToFile { get; set; } = false;
+        /// <summary>
+        /// Nom de la source des logs.
+        /// </summary>
+        private static readonly string sourceName = Assembly.GetExecutingAssembly().GetName().Name ?? "CSBase Logger";
+
         /// <summary>
         /// Affiche un message dans la console et l'écrit dans le fichier de log.
         /// </summary>
@@ -40,6 +47,24 @@ namespace CSBase
         /// <param name="icon">Icone pour différencier le message</param>
         private static void Print(string prefix, ConsoleColor prefixColor, string message, ConsoleColor color = ConsoleColor.White, LoggerIcon? icon = null)
         {
+            using EventSource eventSource = new(sourceName);
+
+            EventLevel level = prefix switch
+            {
+                "DEBUG" => EventLevel.Verbose,
+                "INFO" => EventLevel.Informational,
+                "WARN" => EventLevel.Warning,
+                "ERREUR" => EventLevel.Error,
+                _ => EventLevel.Informational
+            };
+
+            eventSource.Write(prefix, new EventSourceOptions { Keywords = EventKeywords.None, Level = level }, new { Message = message });
+
+            if (prefix == "DEBUG" && !IsDebug)
+            {
+                return;
+            }
+
             StringBuilder sb = new();
 #if NET5_0_OR_GREATER
             if (message.EndsWith('\n'))
@@ -53,32 +78,45 @@ namespace CSBase
             }
 #endif
 
-            if (prefix != "DEBUG" || IsDebug)
+            foreach (string line in message.Split('\n'))
             {
-                foreach (string line in message.Split('\n'))
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write($"{DateTime.Now:dd/MM/yyyy, HH:mm:fff} ");
+                Console.BackgroundColor = prefixColor;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(prefix);
+                if (icon != null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.Write($"{DateTime.Now:dd/MM/yyyy, HH:mm:fff} ");
-                    Console.BackgroundColor = prefixColor;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(prefix);
-                    if (icon != null)
-                    {
-                        Console.BackgroundColor = icon.BackgroundColor;
-                        Console.ForegroundColor = icon.ForegroundColor;
-                        Console.Write($" {icon.Icon} ");
-                    }
-                    Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = color;
-                    Console.WriteLine($" {line}");
-                    Console.ResetColor();
-
-                    sb.Append($"{DateTime.Now:dd/MM/yyyy, HH:mm:fff} {prefix} {line}\n");
+                    Console.BackgroundColor = icon.BackgroundColor;
+                    Console.ForegroundColor = icon.ForegroundColor;
+                    Console.Write($" {icon.Icon} ");
                 }
-            }
-            string final = sb.ToString();
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = color;
+                Console.WriteLine($" {line}");
+                Console.ResetColor();
 
-            if (LogToFile) File.AppendAllText(LogFilePath, final, Encoding.UTF8);
+                sb.Append($"{DateTime.Now:dd/MM/yyyy, HH:mm:fff} {prefix} {line}\n");
+            }
+
+            if (LogToFile) File.AppendAllText(LogFilePath, sb.ToString(), Encoding.UTF8);
+
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
+
+            EventLog eventLog = new("Application")
+            {
+                Source = sourceName
+            };
+
+            eventLog.WriteEntry($"{prefix} {message}", level switch
+            {
+                EventLevel.Critical => EventLogEntryType.Error,
+                EventLevel.Error => EventLogEntryType.Error,
+                EventLevel.Warning => EventLogEntryType.Warning,
+                EventLevel.Informational => EventLogEntryType.Information,
+                EventLevel.Verbose => EventLogEntryType.Information,
+                _ => EventLogEntryType.Information
+            });
         }
 
         /// <summary>

@@ -19,5 +19,9 @@
 		<NeutralLanguage>fr-FR</NeutralLanguage>
 		<PackageTags>frflo</PackageTags>
 	</PropertyGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="System.Diagnostics.EventLog" Version="8.0.0" />
+	</ItemGroup>
 
 </Project>
