@@ -39,7 +39,7 @@ namespace CSBase
         /// <summary>
         /// Nom de la source des logs.
         /// </summary>
-        private static readonly string sourceName = Assembly.GetExecutingAssembly().GetName().Name ?? "CSBase Logger";
+        public static string sourceName = Assembly.GetExecutingAssembly().GetName().Name ?? "CSBase Logger";
 
         /// <summary>
         /// Affiche un message dans la console et l'écrit dans le fichier de log.
@@ -119,7 +119,7 @@ namespace CSBase
                 Source = sourceName
             };
 
-            eventLog.WriteEntry($"{prefix} {message}", level switch
+            eventLog.WriteEntry(message, level switch
             {
                 EventLevel.Critical => EventLogEntryType.Error,
                 EventLevel.Error => EventLogEntryType.Error,
