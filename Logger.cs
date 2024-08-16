@@ -109,6 +109,11 @@ namespace CSBase
 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
 
+            if (!EventLog.SourceExists(sourceName))
+            {
+                EventLog.CreateEventSource(sourceName, "Application");
+            }
+
             EventLog eventLog = new("Application")
             {
                 Source = sourceName
