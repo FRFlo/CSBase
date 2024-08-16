@@ -122,7 +122,7 @@ namespace CSBase
                 EventLevel.Informational => EventLogEntryType.Information,
                 EventLevel.Verbose => EventLogEntryType.Information,
                 _ => EventLogEntryType.Information
-            });
+            }, 1);
         }
 
         /// <summary>
