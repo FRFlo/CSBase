@@ -33,6 +33,10 @@ namespace CSBase
         /// </summary>
         public static bool LogToFile { get; set; } = false;
         /// <summary>
+        /// Indique si les logs doivent être écrits dans le journal des événements de Windows.
+        /// </summary>
+        public static bool LogToWindowsEventLog { get; set; } = true;
+        /// <summary>
         /// Nom de la source des logs.
         /// </summary>
         private static readonly string sourceName = Assembly.GetExecutingAssembly().GetName().Name ?? "CSBase Logger";
@@ -100,6 +104,8 @@ namespace CSBase
             }
 
             if (LogToFile) File.AppendAllText(LogFilePath, sb.ToString(), Encoding.UTF8);
+
+            if (!LogToWindowsEventLog) return;
 
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) return;
 
